@@ -23,14 +23,14 @@
 
 
 
-.hoverBtn{
+.nav-link{
     margin: 6px;
     color: gray;
     transition: color 0.2s;
 
 }
 
-.hoverBtn:hover{
+.nav-link:hover{
     color: orange;
 }
 
