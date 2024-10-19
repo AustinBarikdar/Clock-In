@@ -1,4 +1,5 @@
 <?php
+
 ?>
 
 <!DOCTYPE html>
@@ -62,37 +63,40 @@
   <br>
 
   <div class=" FadeIn container-fluid d-flex justify-content-center box border border-gray rounded-4 shadow-lg ">
-    <form>
+    <form action="ProcessSignUpPage.php" method="post" >
 
       <div class="Position1" id="FirstNameLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
         <label for="exampleFormControlInput1" id="FirstNameActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">First Name</label>
       </div>
-
       <div class="container-fluid d-flex justify-content-center">
-        <input type="text"class="Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="FirstNameInput" aria-describedby="firstnameHelp">
+        <input autocomplete="off" name="FirstName" type="text"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="FirstNameInput" aria-describedby="firstnameHelp">
       </div>
 
       <div class="Position1" id="LastNameLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
         <label for="exampleFormControlInput1" id="LastNameActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Last Name</label>
       </div>
       <div class="container-fluid d-flex justify-content-center">
-        <input type="text"class="Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="LastNameInput" aria-describedby="firstnameHelp">
+        <input autocomplete="off" name="LastName" type="text"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="LastNameInput" aria-describedby="LastnameHelp">
       </div>
 
       <div class="Position1" id="EmailLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
         <label for="exampleFormControlInput1" id="EmailActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Email</label>
       </div>
       <div class="container-fluid d-flex justify-content-center">
-        <input type="email"class="Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="EmailInput" aria-describedby="emailHelp">
+        <input autocomplete="off" name="Email"  type="email"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="EmailInput" aria-describedby="emailHelp">
       </div>
 
       <div class="Position1" id="PasswordLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
         <label for="exampleFormControlInput1" id="EmailActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Password</label>
       </div>
-      <div class="container-fluid d-flex justify-content-center">
-        <input type="password"class="Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="PasswordInput" aria-describedby="emailHelp">
-      </div>
 
+      <div class="container-fluid d-flex justify-content-center">
+        <input autocomplete="off" name="Password" type="password"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="PasswordInput" aria-describedby="PasswordHelp">
+      </div>
+      <br>
+      <div class="container-fluid d-flex justify-content-center">
+          <button id="SignUpButton" class="SignUpButton Position1 shadow-lg border border-gray rounded-2 bg-transparent text-white p-2">Sign Up</button>
+      <div>
   
     </form>
   </div>
