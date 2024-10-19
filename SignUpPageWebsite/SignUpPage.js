@@ -1,3 +1,6 @@
+let SignUpFirstNameLabel = document.getElementById('FirstNameLabel'); 
+let FirstNameInput = document.getElementById('FirstNameInput');
+
 let SignUpEmailLabel = document.getElementById('EmailLabel'); 
 let EmailInput = document.getElementById('EmailInput');
 
@@ -29,8 +32,7 @@ function onkeydownfunction(Input,Label){
 
 EmailInput.onmouseenter = function(){
     onmouseenterfunction(SignUpEmailLabel)
-}
-
+};
 
 EmailInput.onmouseleave = function(){
     onmouseleavefunction(EmailInput,SignUpEmailLabel)
@@ -38,5 +40,20 @@ EmailInput.onmouseleave = function(){
 };
 EmailInput.onkeydown = function(){
     onkeydownfunction(EmailInput,SignUpEmailLabel)
+
+};
+
+FirstNameInput.onmouseenter = function(){
+    console.log('e')
+    onmouseenterfunction(SignUpFirstNameLabel)
+};
+FirstNameInput.onmouseleave = function(){
+    console.log('e')
+    onmouseleavefunction(FirstNameInput,SignUpFirstNameLabel)
+
+};
+FirstNameInput.onkeydown = function(){
+    console.log('e')
+    onkeydownfunction(FirstNameInput,SignUpFirstNameLabel)
 
 };
