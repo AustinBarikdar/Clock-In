@@ -1,5 +1,52 @@
 <?php
+  $first_name = "";
+  $last_name = "";
+  $email = "";
+  $password = "";
 
+  $first_nameError = "";
+  $last_nameError = "";
+  $emailError = "";
+  $passwordError = "";
+  $error = false;
+
+  if ($_SERVER['REQUEST_METHOD'] == "POST" ){
+    $first_name = $_POST['FirstName'];
+    $last_name = $_POST['LastName'];
+    $email = $_POST['Email'];
+    $password = $_POST['Password'];
+    
+    if (empty($first_name)){
+      $first_nameError = "First Name is Required";
+      $error = true;
+    }
+  
+    if (empty($last_name)){
+      $last_nameError = "Last Name is Required";
+      $error = true;
+    }
+     
+    if (empty($last_name)){
+      $last_nameError = "Last Name is Required";
+      $error = true;
+    }
+  
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+      $emailError = "Email is Required";
+      $error = true;
+    }
+  
+    if (empty($password)){
+      $passwordError = "Password is Required";
+      $error = true;
+    }
+  
+    if (strlen($password) > 6){
+      $passwordError = "Password should be atleasts 6 letters long.";
+      $error = true;
+    }
+
+  }
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +59,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Clock In</title>
+  <title>ClockIn SignUp</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -57,43 +104,67 @@
     </div>
   </nav>
   <br>
+  
   <div class="container-fluid d-flex justify-content-center">
     <p class="FadeIn fs-1 text-white"><strong>Sign Up</strong></p><br>
   </div>
+  <div class="container-fluid d-flex justify-content-center">
+    <p class="FadeIn fs-6 text-white"><strong>It doesn't hurt no one if you sign up, its free!</strong></p><br>
+  </div>
   <br>
-
   <div class=" FadeIn container-fluid d-flex justify-content-center box border border-gray rounded-4 shadow-lg ">
-    <form action="ProcessSignUpPage.php" method="post" >
+    <form method = "Post" >
 
       <div class="Position1" id="FirstNameLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
-        <label for="exampleFormControlInput1" id="FirstNameActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">First Name</label>
+        <label for="FirstName" id="FirstNameActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">First Name</label>
       </div>
+      
       <div class="container-fluid d-flex justify-content-center">
-        <input autocomplete="off" name="FirstName" type="text"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="FirstNameInput" aria-describedby="firstnameHelp">
+        <input autocomplete="off" name="FirstName" type="text" class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="FirstNameInput" aria-describedby="firstnameHelp" Value = <?php $first_name ?> >
       </div>
 
+      <div class="container-fluid d-flex justify-content-center"> 
+        <span class= "text-danger"> <?= $first_nameError ?> </span>
+      </div>
+      
       <div class="Position1" id="LastNameLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
-        <label for="exampleFormControlInput1" id="LastNameActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Last Name</label>
+        <label for="LastName" id="LastNameActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Last Name</label>
+      </div>
+
+      <div class="container-fluid d-flex justify-content-center">
+        <input autocomplete="off" name="LastName" type="text"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="LastNameInput" aria-describedby="LastnameHelp" Value = <?= $last_name ?>>
       </div>
       <div class="container-fluid d-flex justify-content-center">
-        <input autocomplete="off" name="LastName" type="text"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="LastNameInput" aria-describedby="LastnameHelp">
-      </div>
+        <span class= "text-danger"> <?= $last_nameError ?> </span>
+      </div>  
+      
 
       <div class="Position1" id="EmailLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
-        <label for="exampleFormControlInput1" id="EmailActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Email</label>
+        <label for="Email" id="EmailActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Email</label>
+      </div>
+
+      <div class="container-fluid d-flex justify-content-center">
+        <input autocomplete="off" name="Email"  type="email"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="EmailInput" aria-describedby="emailHelp" Value = <?= $email ?> >
       </div>
       <div class="container-fluid d-flex justify-content-center">
-        <input autocomplete="off" name="Email"  type="email"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="EmailInput" aria-describedby="emailHelp">
+        <span class= "text-danger"> <?= $emailError ?> </span>
       </div>
+      
 
       <div class="Position1" id="PasswordLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
-        <label for="exampleFormControlInput1" id="EmailActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Password</label>
+        <label for="Password" id="EmailActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Password</label>
       </div>
 
       <div class="container-fluid d-flex justify-content-center">
-        <input autocomplete="off" name="Password" type="password"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="PasswordInput" aria-describedby="PasswordHelp">
+        <input autocomplete="off" name="Password" type="password"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="PasswordInput" aria-describedby="PasswordHelp" <?= $password  ?>  >
       </div>
-      <br>
+
+      <div class="container-fluid d-flex justify-content-center">
+        <span class= "text-danger"> <?= $passwordError ?> </span>
+      </div>
+
+     
+     <br>
       <div class="container-fluid d-flex justify-content-center">
           <button id="SignUpButton" class="SignUpButton Position1 shadow-lg border border-gray rounded-2 bg-transparent text-white p-2">Sign Up</button>
       <div>

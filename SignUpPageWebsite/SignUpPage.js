@@ -151,13 +151,11 @@ LastNameInput.addEventListener('focus', function() {
   
   
 SignUpButton.onmouseenter = function(){
-    console.log('e')
     SignUpButton.style.width = "100px";
 
 };
 
 SignUpButton.onmouseleave = function(){
-    console.log('e')
     SignUpButton.style.width = "85px";
 
 };
