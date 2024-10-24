@@ -1,4 +1,8 @@
 <?php
+
+  require $_SERVER['DOCUMENT_ROOT']."/DataBase.php";
+  $dbconnection = dbconnection();
+
   $first_name = "";
   $last_name = "";
   $email = "";
@@ -40,11 +44,12 @@
       $passwordError = "Password is Required";
       $error = true;
     }
-  
-    if (strlen($password) > 6){
+    if (strlen($password) < 6) {
       $passwordError = "Password should be atleasts 6 letters long.";
       $error = true;
     }
+
+
 
   }
 ?>
@@ -120,7 +125,7 @@
       </div>
       
       <div class="container-fluid d-flex justify-content-center">
-        <input autocomplete="off" name="FirstName" type="text" class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="FirstNameInput" aria-describedby="firstnameHelp" Value = <?php $first_name ?> >
+        <input autocomplete="off" name="FirstName" type="text" class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="FirstNameInput" aria-describedby="firstnameHelp" Value = <?= $first_name ?> >
       </div>
 
       <div class="container-fluid d-flex justify-content-center"> 

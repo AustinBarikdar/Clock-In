@@ -12,6 +12,26 @@ const PasswordInput = document.getElementById('PasswordInput');
 
 const SignUpButton = document.getElementById('SignUpButton');
 
+let FirstNameInputValue = FirstNameInput.value;
+if (FirstNameInputValue !== "") {
+  onmouseenterfunction(SignUpFirstNameLabel)
+}
+
+let LastNameInputValue = LastNameInput.value;
+if (LastNameInputValue !== "") {
+  onmouseenterfunction(SignUpLastNameLabel)
+}
+
+let EmailInputValue = EmailInput.value;
+if (EmailInputValue !== "") {
+  onmouseenterfunction(SignUpEmailLabel)
+}
+
+let PasswordInputValue = PasswordInput.value;
+if (PasswordInputValue !== "") {
+  onmouseenterfunction(SignUpPasswordLabel)
+}
+
 
 
 function onmouseleavefunction(Input,Label){
