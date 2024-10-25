@@ -111,10 +111,10 @@
   <br>
   
   <div class="container-fluid d-flex justify-content-center">
-    <p class="FadeIn fs-1 text-white"><strong>Sign Up</strong></p><br>
+    <p class="FadeIn fs-1 text-white"><strong>Log In</strong></p><br>
   </div>
   <div class="container-fluid d-flex justify-content-center">
-    <p class="FadeIn fs-6 text-white"><strong>It doesn't hurt no one if you sign up, its free!</strong></p><br>
+    <p class="FadeIn fs-6 text-white"><strong>Log In, so we can help you and make sure its you.!</strong></p><br>
   </div>
   <br>
   <div class=" FadeIn container-fluid d-flex justify-content-center box border border-gray rounded-4 shadow-lg ">
