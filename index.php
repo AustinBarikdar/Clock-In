@@ -1,5 +1,10 @@
 <?php
+  session_start();
 
+  $authenticated = false;
+  if (isset($_SESSION["email"])){
+    $authenticated = true;
+  }
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -43,13 +48,28 @@
       <div class="d-flex justify-content-end collapse navbar-collapse" id="navbarNav"></div>
       <div class="">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Log In</a>
-          </li>
-          <li class="nav-item">
+          <?php
+          if ($authenticated == false){
+
+            ?>
+            <li class="nav-item">
+              <a class="nav-link" href="LoginPageWebsite/LogInPage.php">Log In</a>
+            </li>
+            <li class="nav-item">
             <a class="nav-link" href="SignUpPageWebsite/SignUpPage.php">Sign Up</a>
           </li>
-        </ul>
+          </ul>
+          <?php } else{?>
+            <div class="dropdown">
+            <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Welcome,<?= $_SESSION['first_name']?>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="nav-link" href="#">Profile</a></li>
+              <li><a class="nav-link" href="logout.php">Log Out</a></li>
+            </ul>
+          </div>
+          <?php }?>
       </div>
     </div>
     </div>

@@ -7,95 +7,51 @@
     exit;
   }
 
-  $first_name = "";
-  $last_name = "";
   $email = "";
   $password = "";
-
-  $first_nameError = "";
-  $last_nameError = "";
-  $emailError = "";
-  $passwordError = "";
   $error = false;
+  $errormessage = "";
+
+  
 
   if ($_SERVER['REQUEST_METHOD'] == "POST" ){
-    $first_name = $_POST['FirstName'];
-    $last_name = $_POST['LastName'];
     $email = $_POST['Email'];
     $password = $_POST['Password'];
     
-    if (empty($first_name)){
-      $first_nameError = "First Name is Required";
+    if (empty($email) || empty($password)){
+      $errormessage = "Email and Password is Required";
       $error = true;
-    }
+    }else{
+      require $_SERVER['DOCUMENT_ROOT']."/DataBase.php";
+      $dbconnection = dbconnection();
   
-    if (empty($last_name)){
-      $last_nameError = "Last Name is Required";
-      $error = true;
-    }
-     
-    if (empty($last_name)){
-      $last_nameError = "Last Name is Required";
-      $error = true;
-    }
+      $statement = $dbconnection -> prepare("SELECT id, firstname,lastname, password_hash, created_at FROM user Where email = ?");
   
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-      $emailError = "Email is Required";
-      $error = true;
-    }
-    require $_SERVER['DOCUMENT_ROOT']."/DataBase.php";
-    $dbconnection = dbconnection();
-
-    $statement = $dbconnection -> prepare("SELECT id FROM user Where email = ?");
-
-    $statement -> bind_param("s",$email);
-
-    $statement -> execute();
-
-    $statement -> store_result();
-    if($statement -> num_rows > 0) {
-      $emailError = "Email is already in use.";
-      $error = true;
-    }
-    $statement -> close();
+      $statement -> bind_param("s",$email);
   
-    if (empty($password)){
-      $passwordError = "Password is Required";
-      $error = true;
+      $statement -> execute();
+      
+      $statement -> bind_result($id,$first_name,$last_name,$stored_password,$created_at); 
+
+       if ($statement->fetch()){
+          if (password_verify($password,$stored_password)){
+            $_SESSION['id'] =  $id;
+            $_SESSION['first_name'] =  $first_name;
+            $_SESSION['last_name'] =  $last_name;
+            $_SESSION['email'] =  $email;
+            $_SESSION['created_at'] = $created_at;
+            header("location: /index.php");
+            exit;
+          }
+
+       }
+       $statement->close();
+
+       $errormessage = "Email and Password is Invalid";
+
     }
-    if (strlen($password) < 6) {
-      $passwordError = "Password should be atleasts 6 letters long.";
-      $error = true;
-    }
-
-    if (!$error){
-
-      $password = password_hash($password,PASSWORD_DEFAULT);
-      $created_at = date('Y-m-d H:i:s');
-
-      $statement = $dbconnection -> prepare(
-        "INSERT INTO user (firstname,lastname,email,password_hash,created_at)".
-        "Values(?,?,?,?,?)"
-      );
-      $statement-> bind_param("sssss",$first_name,$last_name,$email,$password,$created_at);
-
-      $statement->execute();
-
-
-      $insert_id = $statement->$insert_id;
-
-      $statement->close();
-
-
-      $_SESSION['id'] =  $insert_id;
-      $_SESSION['first_name'] =  $first_name;
-      $_SESSION['last_name'] =  $last_name;
-      $_SESSION['email'] =  $email;
-      $_SESSION['created_at'] = $created_at;
-      header("location: /index.php");
-      exit;
-    }    
-  }
+    
+  }    
 ?>
 
 <!DOCTYPE html>
@@ -114,7 +70,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="SignUpPage.css">
+    <link rel="stylesheet" href="LoginPage.css">
     
 </head>
 
@@ -142,10 +98,10 @@
       <div class="">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="LoginPageWebsite/LogInPage.php">Log In</a>
+            <a class="nav-link disabled" href="/LoginPageWebsite/LogInPage.php">Log In</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="SignUpPageWebsite/SignUpPage.php">Sign Up</a>
+            <a class="nav-link" href="/SignUpPageWebsite/SignUpPage.php">Sign Up</a>
           </li>
         </ul>
       </div>
@@ -164,41 +120,13 @@
   <div class=" FadeIn container-fluid d-flex justify-content-center box border border-gray rounded-4 shadow-lg ">
     <form method = "Post" >
 
-      <div class="Position1" id="FirstNameLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
-        <label for="FirstName" id="FirstNameActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">First Name</label>
-      </div>
-      
-      <div class="container-fluid d-flex justify-content-center">
-        <input autocomplete="off" name="FirstName" type="text" class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="FirstNameInput" aria-describedby="firstnameHelp" Value = <?= $first_name ?> >
-      </div>
-
-      <div class="container-fluid d-flex justify-content-center"> 
-        <span class= "text-danger"> <?= $first_nameError ?> </span>
-      </div>
-      
-      <div class="Position1" id="LastNameLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
-        <label for="LastName" id="LastNameActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Last Name</label>
-      </div>
-
-      <div class="container-fluid d-flex justify-content-center">
-        <input autocomplete="off" name="LastName" type="text"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="LastNameInput" aria-describedby="LastnameHelp" Value = <?= $last_name ?>>
-      </div>
-      <div class="container-fluid d-flex justify-content-center">
-        <span class= "text-danger"> <?= $last_nameError ?> </span>
-      </div>  
-      
-
       <div class="Position1" id="EmailLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
         <label for="Email" id="EmailActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Email</label>
       </div>
 
       <div class="container-fluid d-flex justify-content-center">
         <input autocomplete="off" name="Email"  type="email"class="InputFields Default input shadow-lg border border-gray rounded-3 bg-transparent p-2 text-white " aria-label="default input example" id="EmailInput" aria-describedby="emailHelp" Value = <?= $email ?> >
-      </div>
-      <div class="container-fluid d-flex justify-content-center">
-        <span class= "text-danger"> <?= $emailError ?> </span>
-      </div>
-      
+      </div>  
 
       <div class="Position1" id="PasswordLabel" style="position:relative; left: 23px; bottom: -33px; z-index: 1; display:inline;">
         <label for="Password" id="EmailActualLabel" class="bg-dark form-label text-white" style="display:inline; transition: all 0.2s; padding: 0px 3px;">Password</label>
@@ -209,20 +137,20 @@
       </div>
 
       <div class="container-fluid d-flex justify-content-center">
-        <span class= "text-danger"> <?= $passwordError ?> </span>
+        <span class= "text-danger"> <?= $errormessage ?> </span>
       </div>
 
      
      <br>
       <div class="container-fluid d-flex justify-content-center">
-          <button id="SignUpButton" class="SignUpButton Position1 shadow-lg border border-gray rounded-2 bg-transparent text-white p-2">Sign Up</button>
+          <button id="LoginButton" class="LoginButton Position1 shadow-lg border border-gray rounded-2 bg-transparent text-white p-2">Log In</button>
       <div>
   
     </form>
   </div>
 
 
-  <script src="SignUpPage.js"></script>
+  <script src="LoginPage.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
